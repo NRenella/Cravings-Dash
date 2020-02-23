@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css"
 
@@ -25,10 +26,15 @@ export default class CreateOrders extends Component{
     }
 
     componentDidMount(){
-        this.setState({
-            profiles: ['Test Profile'],
-            username: 'test Profile'
-        })
+        axios.get('http://localhost:5000/profiles/')
+            .then(response => {
+                if(response.data.length > 0){
+                    this.setState({
+                        profiles: response.data.map(profile => profile.username),
+                        username: response.data[0].username
+                    })
+                }
+            })
     }
 
     onChangeUsername(e){
@@ -69,6 +75,9 @@ export default class CreateOrders extends Component{
         }
 
         console.log(order);
+
+        axios.post('http://localhost:5000/orders/add', order)
+            .then(res => console.log(res.data));
 
         window.location = '/';
     }

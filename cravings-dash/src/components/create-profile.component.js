@@ -29,6 +29,7 @@ export default class CreateProfiles extends Component{
 
         axios.post('http://localhost:5000/profiles/add', profile)
             .then(res => console.log(res.data));
+            
 
         this.setState({
             username: ''
