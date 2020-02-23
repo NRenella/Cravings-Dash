@@ -68,7 +68,7 @@ export default class CreateOrders extends Component{
             date: this.state.date
         }
 
-        console.log(order)
+        console.log(order);
 
         window.location = '/';
     }
