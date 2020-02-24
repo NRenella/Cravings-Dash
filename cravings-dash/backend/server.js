@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
 
 const mongoose = require('mongoose');
 
@@ -24,6 +25,14 @@ const ordersRouter = require('./routes/orders');
 
 app.use('/profiles', profilesRouter);
 app.use('/orders', ordersRouter);
+
+if(process.env.NODE_ENV === 'production'){
+    app.use(express.static('cravings-dash/build'));
+
+    app.get('*', (req, res) => {
+        res.sendFile(path.resolve(__dirname, 'cravings-dash', 'build', 'index.html'));
+    });
+}
 
 app.listen(port, ()=>{
     console.log(`Server is running on port: ${port}`);
